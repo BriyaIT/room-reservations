@@ -1,0 +1,45 @@
+.footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 0.15em solid orange;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  animation: typing 4s steps(60, end), blink-caret 0.75s step-end infinite;
+}
+
+.footer.typing-done {
+  border-right: none;
+  animation: none;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+}

@@ -1,0 +1,84 @@
+.main-header {
+  padding: 2rem 1rem 1rem;
+  text-align: center;
+}
+
+.main-header .logo {
+  max-width: 100px;
+  margin-bottom: 0rem;
+  animation: logoZoom 4s ease-in-out infinite;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px #f6b60c);
+  opacity: 0;
+}
+
+@keyframes logoZoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.main-header h1 {
+  font-size: 2.8rem;
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  margin-bottom: 0rem;
+  margin-top: 0rem;
+  opacity: 0;
+}
+
+.main-header h2 {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  color: white;
+  font-weight: 500;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.5px;
+  opacity: 0;
+  margin: 0.8rem 0rem 0.8rem;
+}
+
+.show-immediately {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.fade-in-drop {
+  animation: fadeInDrop 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+@keyframes fadeInDrop {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  /* 📦 Less padding on mobile (doesn't do anything?) */
+  .main-header {
+    padding: 1.5rem 1rem 0.5rem;
+  }
+
+  /* 🧱 Smaller site title */
+  .main-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+  }
+
+  /* 🏷️ Smaller room + site subtitle */
+  .main-header h2 {
+    font-size: 1.2rem;
+    padding-top: 0.3rem;
+  }
+}

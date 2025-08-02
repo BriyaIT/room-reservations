@@ -1,0 +1,256 @@
+
+/* ===============================
+🔝 SHARED HEADER & LOGO
+Used by: index.html, rooms.html, reservations.html
+=============================== */
+/* .main-header {
+  padding: 2rem 1rem 1rem; /* Reduced padding: top=2rem, bottom=1rem *
+  text-align: center;
+}
+
+/* 🎯 Glowing animated logo *
+.main-header .logo {
+  max-width: 100px;
+  margin-bottom: 0rem;
+  animation: logoZoom 4s ease-in-out infinite;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px #f6b60c);
+  opacity: 0;
+} */
+
+/* @keyframes logoZoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+} */
+
+/* 🏷 H1 Main site title (Animated) */
+/* .main-header h1 {
+  font-size: 2.8rem;
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+}
+
+/* 🏷 H2 Secondary site title (Animated) */
+/* .main-header h2 {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  color: white;
+  font-weight: 500;
+  /* padding: 0rem 1rem 1rem; Reduced padding: top=2rem, bottom=1rem
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.5px;
+  opacity: 0;
+} */
+
+/* ✅ Make animated elements visible immediately */
+/* .show-immediately {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+} */
+
+/* ===============================
+📱 RESPONSIVE DESIGN (Mobile)
+Reduces header spacing and text size on small screens
+=============================== */
+/*@media (max-width: 600px) {
+  /* 📦 Less padding on mobile 
+  .main-header {
+    padding: 1.5rem 1rem 0.5rem;
+  }
+
+  /* 🧱 Smaller site title 
+  .main-header h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.2rem;
+  }
+  /* 🏷️ Smaller room + site subtitle 
+  .main-header h2 {
+    font-size: 1.2rem;
+    padding-top: 2px;
+  }
+}*/
+
+/* ===============================
+✨ TEXT ANIMATION: Fade + Drop
+Used by: index.html (triggered by JS)
+=============================== */
+/* .fade-in-drop {
+  opacity: 0;
+  transform: translateY(-50px);
+  animation: fadeInDrop 1s ease-out forwards;
+}
+
+@keyframes fadeInDrop {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} */
+
+/* Fade-in with drop animation */
+/* .fade-in-drop {
+  animation: fadeInDrop 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+@keyframes fadeInDrop {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} */
+
+/* Typing animation for footer */
+/* .footer p {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid transparent; /* Caret /
+  width: 0;
+  animation: typing 3s steps(40, end) forwards,
+             blink-caret 0.75s step-end 4;
+}
+
+.typing-done p {
+  border-right: none;
+  width: auto;
+  animation: none;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #000; }
+} */
+
+/* ===============================
+⌨️ FOOTER TYPING ANIMATION
+=============================== */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 0.15em solid orange;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  animation: typing 4s steps(60, end), blink-caret 0.75s step-end infinite;
+}
+
+.footer.typing-done {
+  border-right: none;
+  animation: none;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
+
+/* ===============================
+🧱 SHARED CARD COMPONENTS
+Used by: index.html, rooms.html
+=============================== */
+/* .image-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.image-card {
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s ease;
+  background-color: white;
+  position: relative;
+}
+
+.image-card:hover {
+  transform: scale(1.05);
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0.75rem 0;
+  text-align: center;
+} */
+
+/* ===============================
+📱 RESPONSIVE MEDIA QUERIES
+Used by: index.html, rooms.html
+=============================== */
+@media (max-width: 1024px) {
+  .main-header h1 {
+    font-size: 2.2rem;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+
+
+  .main-header .logo {
+    max-width: 70px;
+  }
+
+  .footer {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+}

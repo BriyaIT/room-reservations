@@ -1,0 +1,82 @@
+/* PIN Modal Styles */
+.pin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.pin-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pin-modal input {
+  width: 278px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 8px 0;
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+}
+
+.login-container {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  z-index: 1000;
+
+}
+
+.login-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  /* background: white; */
+  border: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Add ring effect for logged-in users */
+.login-btn[aria-label*="admin"] {
+  border: 2px solid #FFD700;
+}
+
+.login-btn[aria-label*="staff"] {
+  border: 2px solid #888;
+}
