@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/room-reservations/static/css/main.eda7164a.css",
+    "main.js": "/room-reservations/static/js/main.d93a2e42.js",
+    "static/js/453.b1b37ee7.chunk.js": "/room-reservations/static/js/453.b1b37ee7.chunk.js",
+    "static/media/Main_Site_ON.png": "/room-reservations/static/media/Main_Site_ON.a0d051100e76208c122b.png",
+    "static/media/Main_Site_SH.png": "/room-reservations/static/media/Main_Site_SH.241ec753c68a76c16d46.png",
+    "static/media/1rst Floor.png": "/room-reservations/static/media/1rst Floor.19f85c0bfca780b55d10.png",
+    "static/media/basement-Annex.png": "/room-reservations/static/media/basement-Annex.b88f7292806f72360be5.png",
+    "static/media/Main_GA_Annex.png": "/room-reservations/static/media/Main_GA_Annex.16cb4a8e527a7cbe12b3.png",
+    "static/media/GA-Classroom-85.jpeg": "/room-reservations/static/media/GA-Classroom-85.b88effc0163f8aa3b0f8.jpeg",
+    "static/media/GA-Classroom-79.jpeg": "/room-reservations/static/media/GA-Classroom-79.29f1b20025b5dc1dfe3b.jpeg",
+    "static/media/Green-Classroom.jpeg": "/room-reservations/static/media/Green-Classroom.c3c4f073ba89d5e49c6a.jpeg",
+    "static/media/Zoom-Conf-2nd.jpeg": "/room-reservations/static/media/Zoom-Conf-2nd.ce7b13a5177ab9b1ec25.jpeg",
+    "static/media/Bletzinger-Classroom.jpeg": "/room-reservations/static/media/Bletzinger-Classroom.d939c5318abed2602636.jpeg",
+    "static/media/fort_totten.jpg": "/room-reservations/static/media/fort_totten.4db8de6a8d76961afe95.jpg",
+    "static/media/2nd-floor-office.jpeg": "/room-reservations/static/media/2nd-floor-office.907a8fcdcdbd234ab695.jpeg",
+    "static/media/IT-Testing.jpeg": "/room-reservations/static/media/IT-Testing.75bba03817f2820253de.jpeg",
+    "static/media/GA-Small-Counseling-Room.jpeg": "/room-reservations/static/media/GA-Small-Counseling-Room.60fb8312dc4b285ebf1a.jpeg",
+    "static/media/GA-Large-Counseling-Room.jpeg": "/room-reservations/static/media/GA-Large-Counseling-Room.b5b529bbb54fe9c6cb64.jpeg",
+    "static/media/GA_Site.jpeg": "/room-reservations/static/media/GA_Site.7605a6355ea16f3643a5.jpeg",
+    "static/media/briya_logo.png": "/room-reservations/static/media/briya_logo.e189dff1af8123e0c0e8.png",
+    "index.html": "/room-reservations/index.html",
+    "main.eda7164a.css.map": "/room-reservations/static/css/main.eda7164a.css.map",
+    "main.d93a2e42.js.map": "/room-reservations/static/js/main.d93a2e42.js.map",
+    "453.b1b37ee7.chunk.js.map": "/room-reservations/static/js/453.b1b37ee7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eda7164a.css",
+    "static/js/main.d93a2e42.js"
+  ]
+}
