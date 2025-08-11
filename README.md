@@ -1,10 +1,6 @@
 # Briya Room Reservations Frontend
 If you're not on the Briya IT team, this is not for you...
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:

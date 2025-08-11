@@ -5,7 +5,7 @@ import Footer from '../Components/Footer';
 import BackButton from '../Components/BackButton';
 import campuses from '../Data/campuses';
 import rooms from '../Data/rooms';
-// import './Rooms.css';
+import './Rooms.css';
 import LoginButton from '../Components/LoginButton.js';
 import {downloadSiteEvents} from '../Data/downloadSiteEvents.js';
 import DownloadButton from '../Components/DownloadButton';
@@ -40,13 +40,13 @@ const Rooms = ({ userRole, setShowPinModal }) => {
 
       <Header 
         title="BRIYA Room Reservations"
-        subtitle={`${campus?.name || 'Campus'} Rooms`}
+        subtitle={`${campus?.name || 'Campus'} - Choose a Room to Book`}
         showImmediately={true}
       />
 
 
       {/* Login Button */}
-      <div className="login-container">
+      <div className="login-container r">
         <LoginButton 
           userRole={userRole} 
           onClick={() => setShowPinModal(true)} 
@@ -54,14 +54,14 @@ const Rooms = ({ userRole, setShowPinModal }) => {
       </div>
       
       <main>
-        <section className="image-card-container">
+        <section className="room-card-container r">
           {campusRooms.length === 0 ? (
             <p className="no-rooms">No rooms found for this campus.</p>
           ) : (
             campusRooms.map((room, index) => (
               <div
                 key={index}
-                className="image-card"
+                className="room-card"
                 onClick={() => navigateToCalendar(campusId, room.name)}
                 role="button"
                 tabIndex={0}

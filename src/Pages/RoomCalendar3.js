@@ -23,7 +23,7 @@ import { serverIp } from '../Data/backend.js'
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
 
-// Detect if touch device
+// Detect if touch device to disable DnD
 const isTouchOnlyDevice = (() => {
   if (typeof window === 'undefined') return false;
 
@@ -87,7 +87,6 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
 
   // Dragging fix
   const [isDragging, setIsDragging] = useState(false);
-
 
 
   // =================== CALENDAR FUNCTIONS ==============================
@@ -272,12 +271,101 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     setShowModal(true);
   }
 
-  // Changing datetime in booking modal
-  const handleDateTimeChange = (field, value) => {
-    setNewEvent(prev => ({
-      ...prev,
-      [field]: new Date(value)
-    }));
+  // Old changing datetime in booking modal
+  // const handleDateTimeChange = (field, value) => {
+  //   setNewEvent(prev => ({
+  //     ...prev,
+  //     [field]: new Date(value)
+  //   }));
+  // };
+
+  // For separate date and time
+  // const handleSplitDateTimeChange = (field, datePart, timePart) => {
+  //   setNewEvent(prev => {
+  //     let current = prev[field] ? new Date(prev[field]) : new Date();
+  
+  //     if (datePart) {
+  //       const [year, month, day] = datePart.split('-').map(Number);
+  //       current.setFullYear(year, month - 1, day);
+  //     }
+  
+  //     if (timePart) {
+  //       const [hour, minute] = timePart.split(':').map(Number);
+  //       current.setHours(hour, minute);
+  //     }
+  
+  //     return {
+  //       ...prev,
+  //       [field]: current
+  //     };
+  //   });
+  // };
+
+  const handleSplitDateTimeChange = (field, datePart, timePart) => {
+    setNewEvent(prev => {
+      let current = prev[field] ? new Date(prev[field]) : new Date();
+  
+      if (datePart) {
+        const [year, month, day] = datePart.split('-').map(Number);
+        current.setFullYear(year, month - 1, day);
+      }
+  
+      if (timePart) {
+        const [hour, minute] = timePart.split(':').map(Number);
+        current.setHours(hour, minute);
+      }
+  
+      const updatedEvent = { ...prev, [field]: current };
+  
+      // If start time changes and it's after the end time → auto-adjust end
+      if (field === 'start') {
+        const endDate = new Date(updatedEvent.end);
+        if (!updatedEvent.end || current >= endDate) {
+          updatedEvent.end = new Date(current.getTime() + 30 * 60000); // +30 mins
+        }
+      }
+  
+      return updatedEvent;
+    });
+  };
+
+  // 30 minute increment dropdown
+  // const generateTimeOptions = () => {
+  //   const options = [];
+  //   for (let h = 0; h < 24; h++) {
+  //     for (let m of [0, 30]) {
+  //       options.push(
+  //         <option key={`${h}:${m}`} value={moment({ hour: h, minute: m }).format('HH:mm')}>
+  //           {moment({ hour: h, minute: m }).format('h:mm A')}
+  //         </option>
+  //       );
+  //     }
+  //   }
+  //   return options;
+  // };
+
+  const generateTimeOptions = (minMoment = null) => {
+    const options = [];
+    const minMinutes = minMoment
+      ? minMoment.hours() * 60 + minMoment.minutes()
+      : 0;
+  
+    for (let h = 0; h < 24; h++) {
+      for (let m of [0, 30]) {
+        const totalMinutes = h * 60 + m;
+        if (totalMinutes >= minMinutes) {
+          options.push(
+            <option
+              key={`${h}:${m}`}
+              value={moment({ hour: h, minute: m }).format('HH:mm')}
+            >
+              {moment({ hour: h, minute: m }).format('h:mm A')}
+            </option>
+          );
+        }
+      }
+    }
+    return options;
   };
 
   // Test booking display
@@ -373,6 +461,14 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     if (!title || !bookedBy) {
       setError('Please fill in all required fields');
       return;
+    }
+
+    const startMoment = moment(newEvent.start);
+    const endTime = moment(newEvent.end);
+
+    if (endTime.isBefore(startMoment)) {
+      setError('End time cannot be before start time');
+      return
     }
 
     const booking = {
@@ -472,7 +568,6 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
       clearTimeout(handler);
     };
   }, [inputSearch]);
-
   
   // =========================================================
 
@@ -545,6 +640,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
           {/* Drag and drop! */}
           <DnDCalendar
             className={`${isDragging ? 'dragging-active' : ''}`}
+            // Calendar stuff
             localizer={localizer}
             events={events}
             eventPropGetter={eventPropGetter} // Pass the new getter function here
@@ -574,20 +670,23 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
             onEventDrop={handleEventDrop}
             onEventResize={handleEventResize}
             draggableAccessor={event => {
-              if (isTouchOnlyDevice) return false;
+              if (isTouchOnlyDevice) return false; // Disable DnD
+              // Only admin and event owners
               return userRole === 'admin' || isMyEvent(event._id)}
             }
             resizableAccessor={event => {
-              if (isTouchOnlyDevice) return false;
+              if (isTouchOnlyDevice) return false; // Disable DnD
+              // Disable for events in top tab
               const isFullDayEvent = (event.end.getTime() - event.start.getTime()) === (24 * 60 * 60 * 1000);
               const isMultiDayEvent = moment(event.start).startOf('day').isBefore(moment(event.end).startOf('day'));
               if (isFullDayEvent || isMultiDayEvent) {
                 return false;
               }
+              // Only admin and event owners
               return userRole === 'admin' || isMyEvent(event._id)
             }}
             onDragStart={() => setIsDragging(true)} // Set state to true when drag starts
-            // onDragEnd={() => setIsDragging(false)} // Set state to false when drag ends
+            // onDragEnd={() => setIsDragging(false)} // Not working, used elsewhere
           />
         </div>
       )}
@@ -597,25 +696,61 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
         <div className="modal-overlay">
           <div className="modal">
             <h3>{editingEvent ? 'Edit Booking' : 'Book Room'} {roomNumber}</h3>
-            {/* Start/end time */}
+            {/* Title */}
+            <div className="form-group">
+              <label>Event Title *</label>
+              <input
+                type="text"
+                defaultValue={editingEvent?.rawTitle}
+                // onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
+                ref={titleRef}
+                placeholder="e.g., Team Meeting"
+              />
+            </div>
+
+            {/* Start Time */}
             <div className="time-group">
               <div className="form-group">
-                <label>Start Time *</label>
+                <label>Start Date *</label>
                 <input
-                  type="datetime-local"
-                  value={moment(newEvent.start).format('YYYY-MM-DDTHH:mm')}
-                  onChange={(e) => handleDateTimeChange('start', e.target.value)}
+                  type="date"
+                  value={moment(newEvent.start).format('YYYY-MM-DD')}
+                  onChange={(e) => handleSplitDateTimeChange('start', e.target.value, null)}
                 />
               </div>
               <div className="form-group">
-                <label>End Time *</label>
-                <input
-                  type="datetime-local"
-                  value={moment(newEvent.end).format('YYYY-MM-DDTHH:mm')}
-                  onChange={(e) => handleDateTimeChange('end', e.target.value)}
-                />
+              <select
+                className="time-select"
+                list="start-times"
+                value={moment(newEvent.start).format('HH:mm')}
+                onChange={(e) => handleSplitDateTimeChange('start', null, e.target.value)}
+              >
+                {generateTimeOptions()}
+              </select>
               </div>
             </div>
+
+            {/* End Time */}
+            <div className="time-group">
+              <div className="form-group">
+                <label>End Date *</label>
+                <input
+                  type="date"
+                  value={moment(newEvent.end).format('YYYY-MM-DD')}
+                  onChange={(e) => handleSplitDateTimeChange('end', e.target.value, null)}
+                />
+              </div>
+              <div className="form-group">
+                <select
+                  className="time-select"
+                  value={moment(newEvent.end).format('HH:mm')}
+                  onChange={(e) => handleSplitDateTimeChange('end', null, e.target.value)}
+                >
+                  {generateTimeOptions(newEvent.start ? moment(newEvent.start).add(30, 'minutes') : null)}
+                </select>
+              </div>
+            </div>
+
 
             {/* Only new events have recurring tickbox */}
             {!editingEvent && (
@@ -659,6 +794,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
                   </div>
                 </div>
                 {/* Recurring event end date */}
+                <div className="time-group">
                 <div className="form-group">
                   <label>Ends On *</label>
                   <input
@@ -670,20 +806,10 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
                     }}
                   />
                 </div>
+                </div>
               </>
             )}
             
-            {/* Title */}
-            <div className="form-group">
-              <label>Event Title *</label>
-              <input
-                type="text"
-                defaultValue={editingEvent?.rawTitle}
-                // onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
-                ref={titleRef}
-                placeholder="e.g., Team Meeting"
-              />
-            </div>
             {/* Booked By */}
             <div className="form-group">
               <label>{editingEvent ? 'Updated By' : 'Booked By'} *</label>

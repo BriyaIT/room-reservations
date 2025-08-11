@@ -292,10 +292,52 @@ Modal Styles
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-input[type="datetime-local"] {
+input[type="date"] {
   padding: 10px;
   font-family: 'Roboto', sans-serif;
+  cursor: pointer;
 }
+
+.time-group {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Dropdown! */
+
+.time-select {
+  width: 100%;
+  padding: 11px 24px 11px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  box-sizing: border-box;
+  appearance: none; /* removes native arrow on some browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23555' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 5px center;
+  background-size: 16px 16px;
+  cursor: pointer;
+}
+
+.time-select[size] {
+  max-height: 150px; /* Limit height */
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.time-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
 
 /* ============================
 Recurring Events Specific Styles
@@ -343,11 +385,6 @@ Recurring Events Specific Styles
     margin-bottom: 20px;
 }
 
-input[type="date"] {
-  padding: 10px;
-  font-family: 'Roboto', sans-serif;
-}
-
 .recur-group {
   margin-bottom: 20px;
 }
@@ -379,6 +416,7 @@ input[type="date"] {
   margin-right: 10px;
   position: relative;
   outline: none;
+  cursor: pointer;
 }
 
 .recur-group input:checked::before {
@@ -400,11 +438,6 @@ input[type="date"] {
 
 /* end recurring styles */
 
-.time-group {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
 
 .modal-buttons {
   display: flex;
@@ -445,7 +478,7 @@ input[type="date"] {
 }
 
 /* ============================
-Recurring Delete Modal Styles
+Delete Modal Styles
 ==============================*/
 /* Styling for the radio button group */
 #delete-warning {

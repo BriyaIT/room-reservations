@@ -52,7 +52,7 @@ const Sites = ({ userRole, setShowPinModal }) => {
       h1Visible={animations.h1}
       h2Visible={animations.h2}
       title="BRIYA Room Reservations"
-      subtitle="Explore Learning Spaces Across Briya Campuses"
+      subtitle="Choose a Site"
     />
 
       {/* Login Button */}

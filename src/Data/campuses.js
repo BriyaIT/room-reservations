@@ -6,10 +6,10 @@ import Main_Site_ON from '../Assets/Sites/Main_Site_ON.png';
 
 const campuses = [
   { id: 'fortTotten', name: 'Fort Totten', image: fort_totten},
-  { id: 'georgia', name: 'Georgia', image: GA_Site},
-  { id: 'georgiaAnnex', name: 'Georgia Annex', image: Main_GA_Annex},
   { id: 'shepherd', name: 'Shepherd', image: Main_Site_SH},
-  { id: 'ontario', name: 'Ontario', image: Main_Site_ON}
+  { id: 'ontario', name: 'Ontario', image: Main_Site_ON},
+  { id: 'georgia', name: 'Georgia', image: GA_Site},
+  { id: 'georgiaAnnex', name: 'Georgia Annex', image: Main_GA_Annex}
 ];
 
 export default campuses;

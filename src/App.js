@@ -1,11 +1,8 @@
-import './App.css';
+import './App.css'; // Nothing here :)
 import { HashRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 import Sites from './Pages/Sites.js';
 import Rooms from './Pages/Rooms.js';
 import RoomCalendar from './Pages/RoomCalendar3.js';
-
-// import { DndProvider } from 'react-dnd-multi-backend';
-// import { HTML5toTouch } from 'rdndmb-html5-to-touch';
 
 import { useState, useEffect } from 'react';
 import PinModal from './Components/PinModal.js';
@@ -21,29 +18,27 @@ function App() {
   }, []);
 
   return (
-    // <DndProvider options={HTML5toTouch}>
-      <Router>
-        <Routes>
-          <Route path="/" element={
-            <Sites userRole={userRole} setShowPinModal={setShowPinModal} setUserRole={setUserRole} />
-          } />
-          <Route path="/rooms/:campusId" element={
-            <Rooms userRole={userRole} setShowPinModal={setShowPinModal} setUserRole={setUserRole} />
-          } />
-          <Route path="/calendar/:campusId/:roomId" element={
-            <RoomCalendarWrapper userRole={userRole} setShowPinModal={setShowPinModal} setUserRole={setUserRole} />
-          } />
-        </Routes>
+    <Router>
+      <Routes>
+        <Route path="/" element={
+          <Sites userRole={userRole} setShowPinModal={setShowPinModal} setUserRole={setUserRole} />
+        } />
+        <Route path="/rooms/:campusId" element={
+          <Rooms userRole={userRole} setShowPinModal={setShowPinModal} setUserRole={setUserRole} />
+        } />
+        <Route path="/calendar/:campusId/:roomId" element={
+          <RoomCalendarWrapper userRole={userRole} setShowPinModal={setShowPinModal} setUserRole={setUserRole} />
+        } />
+      </Routes>
 
-        {showPinModal && (
-          <PinModal
-            onVerify={setUserRole}
-            onClose={() => setShowPinModal(false)}
-          />
-        )}
+      {showPinModal && (
+        <PinModal
+          onVerify={setUserRole}
+          onClose={() => setShowPinModal(false)}
+        />
+      )}
 
-      </Router>
-    // </DndProvider>
+    </Router>
   );
 }
 

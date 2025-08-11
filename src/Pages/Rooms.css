@@ -1,7 +1,7 @@
 /* . */
 
 /* Shared styles for all pages */
-.image-card-container {
+.room-card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -9,9 +9,9 @@
   /* padding: 2rem; */
 }
 
-.image-card {
-  width: 16vw;
-  height: 45vh;
+.room-card {
+  width: 17vw;
+  height: 20vh;
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
@@ -26,12 +26,12 @@
 
 }
 
-.image-card:hover {
+.room-card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
 }
 
-.image-card img {
+.room-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -52,9 +52,9 @@
 
 /* Responsive styles */
 @media (max-width: 1024px) {
-  .image-card {
+  .room-card {
     width: 25vw;
-    height: 45vh;
+    height: 16vh;
   }
   
   .caption {
@@ -64,12 +64,12 @@
 }
 
 @media (max-width: 600px) {
-  .image-card {
+  .room-card {
     width: 43vw;
-    height: 32vh;
+    height: 14vh;
   }
 
-  .image-card-container {
+  .room-card-container {
     gap: 1rem;
     /* padding: 2rem; */
   }
