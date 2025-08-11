@@ -1,45 +1,36 @@
 .footer {
   text-align: center;
-  padding: 1rem;
+  padding: 0.5rem;
   font-size: 1.2rem;
   color: white;
-  margin-top: 2rem;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 0.15em solid orange;
+  /* margin-top: 1rem; */
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  animation: typing 4s steps(60, end), blink-caret 0.75s step-end infinite;
 }
 
-.footer.typing-done {
-  border-right: none;
-  animation: none;
+/* Optional: Style the typed.js cursor */
+.typed-cursor {
+  font-size: 1.2rem;
+  color: orange;
+  opacity: 1;
+  animation: typed-blink 0.7s infinite;
 }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
+@keyframes typed-blink {
   50% {
-    border-color: orange;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer {
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 600px) {
   .footer {
     font-size: 0.8rem;
-    padding: 0.5rem;
   }
 }

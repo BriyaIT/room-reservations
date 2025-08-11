@@ -1,11 +1,14 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 import BackButton from '../Components/BackButton';
 import campuses from '../Data/campuses';
 import rooms from '../Data/rooms';
-import './Rooms.css';
+// import './Rooms.css';
 import LoginButton from '../Components/LoginButton.js';
+import {downloadSiteEvents} from '../Data/downloadSiteEvents.js';
+import DownloadButton from '../Components/DownloadButton';
 
 const Rooms = ({ userRole, setShowPinModal }) => {
   const { campusId } = useParams();
@@ -16,7 +19,6 @@ const Rooms = ({ userRole, setShowPinModal }) => {
   
   // Get rooms for this campus
   const campusRooms = rooms[campusId] || [];
-
   
   const navigateToCalendar = (campusId, roomName) => {
     // Create a URL-friendly room ID
@@ -28,11 +30,20 @@ const Rooms = ({ userRole, setShowPinModal }) => {
     <div className="rooms-page">
       <BackButton to="/" text="Sites"/>
       
+      {/* Download site events */}
+      {userRole === 'admin' && (
+        <DownloadButton
+          title="Download all events for this site"
+          onClick={() => downloadSiteEvents(campusId)}
+        />
+      )}
+
       <Header 
         title="BRIYA Room Reservations"
         subtitle={`${campus?.name || 'Campus'} Rooms`}
         showImmediately={true}
       />
+
 
       {/* Login Button */}
       <div className="login-container">
@@ -63,6 +74,7 @@ const Rooms = ({ userRole, setShowPinModal }) => {
           )}
         </section>
       </main>
+      <Footer />
     </div>
   );
 };

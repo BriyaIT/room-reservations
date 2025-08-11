@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './LoginPin.css';
+import { serverIp } from '../Data/backend.js'
 
-const PinModal = ({ onVerify, onClose }) => {
+
+const PinModal = ({ onVerify, onClose, showCancel=true }) => {
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/verify-pin', { pin });
+      const response = await axios.post(`${serverIp}/verify-pin`, { pin });
       sessionStorage.setItem('pinRole', response.data.role);
       onVerify(response.data.role);
       onClose();
@@ -30,7 +32,7 @@ const PinModal = ({ onVerify, onClose }) => {
         {error && <p className="error">{error}</p>}
         <div className="modal-buttons">
           <button onClick={handleSubmit}>Verify</button>
-          <button onClick={onClose}>Cancel</button>
+          {showCancel && (<button onClick={onClose}>Cancel</button>)}
         </div>
       </div>
     </div>

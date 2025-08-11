@@ -1,8 +1,12 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "BRR",
+  "name": "Briya Room Reservations",
   "icons": [
-    
+    {
+      "src": "briya_logo.png",
+      "sizes": "192x192 64x64 32x32",
+      "type": "image/png"
+    }
   ],
   "start_url": ".",
   "display": "standalone",

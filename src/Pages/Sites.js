@@ -34,15 +34,9 @@ const Sites = ({ userRole, setShowPinModal }) => {
         setAnimations(prev => ({ ...prev, h2: true }));
       }, 600);
   
-      // Footer after 4000ms
-      const footerTimer = setTimeout(() => {
-        setAnimations(prev => ({ ...prev, footer: true }));
-      }, 4000);
-  
       return () => {
         clearTimeout(h1Timer);
         clearTimeout(h2Timer);
-        clearTimeout(footerTimer);
       };
   }, []);
 
@@ -89,7 +83,7 @@ const Sites = ({ userRole, setShowPinModal }) => {
       </main>
 
       {/* Footer */}
-      <Footer typingDone={animations.footer} />
+      <Footer />
     </div>
   );
 };

@@ -10,8 +10,8 @@
 }
 
 .image-card {
-  width: 230px;
-  height: 350px;
+  width: 16vw;
+  height: 45vh;
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
@@ -53,8 +53,8 @@
 /* Responsive styles */
 @media (max-width: 1024px) {
   .image-card {
-    width: 25%;
-    height: 300px;
+    width: 25vw;
+    height: 45vh;
   }
   
   .caption {
@@ -65,8 +65,8 @@
 
 @media (max-width: 600px) {
   .image-card {
-    width: 43%;
-    height: 230px;
+    width: 43vw;
+    height: 32vh;
   }
 
   .image-card-container {

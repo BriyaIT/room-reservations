@@ -1,5 +1,5 @@
 .room-calendar {
-    padding: 20px;
+    padding: 20px 20px 10px;
     font-family: 'Roboto';
 }
   
@@ -28,7 +28,7 @@ TABS
 
 .view-tabs-container {
   position: relative;
-  /* z-index: 1; */
+  z-index: 0;
 }
 
 .view-tabs {
@@ -47,14 +47,22 @@ TABS
   font-size: 14px;
   border-radius: 8px 8px 0 0;
   position: relative;
-  /* top: 1px; */
+  top: 3px; /* Corresponds with translate */
+  transition: all 0.2s ease-in-out;
+}
+
+.view-tabs button:hover {
+  background: #dadada;
+  transform: translateY(-3px);
 }
 
 .view-tabs button.active {
   background: white;
-  color: 0081C8;
+  color: #0081C8;
   font-weight: bold;
   /* border-bottom: 1px solid white; */
+  top: 0px;
+  transform: none;
 }
 
 @media (max-width: 1024px) {
@@ -116,6 +124,7 @@ Calendar
 
 .calendar-container {
   /* border: 1px solid #ddd; */
+  position: relative;
   padding: 20px;
   border-radius: 8px 0px 8px 8px;
   overflow: hidden;
@@ -126,9 +135,11 @@ Calendar
   /* flex-direction: column; */
   height: 80vh;
   /* min-height: 600px; */
+  z-index: 1;
+
 }
 
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .calendar-container {
     height: 76vh;
   }
@@ -145,6 +156,7 @@ Calendar
     height: 77vh;
   }
 }
+  */
 
 @media (max-width: 400px) {
   .calendar-container {
@@ -220,6 +232,7 @@ Modal Styles
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   z-index: 1000;
@@ -234,9 +247,20 @@ Modal Styles
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.modal p {
+  max-width: 500px;
+  overflow-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
 .modal h3 {
   margin-top: 0;
   color: #333;
+}
+
+.modal span {
+  color: #0081C8
 }
 
 .form-group {
@@ -258,6 +282,7 @@ Modal Styles
   border-radius: 4px;
   font-size: 14px;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 .form-group input:focus,
@@ -272,9 +297,113 @@ input[type="datetime-local"] {
   font-family: 'Roboto', sans-serif;
 }
 
+/* ============================
+Recurring Events Specific Styles
+==============================*/
+/* Day picker buttons */
+.day-picker {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+.day-btn {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.day-btn.selected {
+    background-color: #0081C8;
+    color: white;
+    border-color: #0081C8;
+    box-shadow: 0 2px 4px rgba(0, 129, 200, 0.3);
+}
+
+.day-btn:hover {
+    background-color: #ddd;
+}
+
+.day-btn.selected:hover {
+    background-color: #005FA3;
+}
+
+/* Error message style */
+.error {
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+input[type="date"] {
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.recur-group {
+  margin-bottom: 20px;
+}
+
+.recur-group label {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #555;
+}
+
+.recur-group .is-recur {
+  cursor: pointer;
+  font-weight: 500 !important;
+  margin: -10px 0;
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.recur-group input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #555;
+  border-radius: 50%;
+  margin-right: 10px;
+  position: relative;
+  outline: none;
+}
+
+.recur-group input:checked::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #555;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.recur-group label:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+/* end recurring styles */
+
 .time-group {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .modal-buttons {
@@ -290,15 +419,7 @@ input[type="datetime-local"] {
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-}
-
-.modal-buttons button:first-child {
-  background-color: #A78700;
-  color: white;
-}
-
-.modal-buttons button:first-child:hover {
-  background-color: #886e00;
+  transition: all 0.2s ease-in-out;
 }
 
 .modal-buttons button:last-child {
@@ -310,21 +431,114 @@ input[type="datetime-local"] {
   background-color: #5a6268;
 }
 
+.modal-buttons button:first-child {
+  background-color: #A78700;
+  color: white;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #886e00;
+}
+
+#event-det-del:hover {
+  background-color: #dadee2;
+}
+
+/* ============================
+Recurring Delete Modal Styles
+==============================*/
+/* Styling for the radio button group */
+#delete-warning {
+  color: red;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* Adds space between options */
+    margin: 0px 0;
+    font-size: 1rem;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.radio-group label:hover {
+    background-color: #f0f0f0;
+    border-color: #999;
+}
+
+/* Style the radio input itself */
+.radio-group input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    outline: none;
+}
+
+/* Create the inner dot for the selected radio button */
+.radio-group input[type="radio"]:checked::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: #555;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Style the label text when the radio button is checked */
+.radio-group input[type="radio"]:checked + span {
+    font-weight: bold;
+}
+
 /* =====================================
 Custom calendar event styling 
 ====================================== */
-/* .rbc-calendar {
-  flex: 1;
-  min-height: 0;
-} */
+.rbc-calendar {
+  height: 90% !important;
+  display: flex;
+  flex-direction: column;
+}
 
-.rbc-event {
-  background-color: #0081C8;
+.rbc-time-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+
+
+.rbc-event.my-event, .rbc-event.other-user-event {
   border: none;
   color: white;
   border-radius: 4px;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
+  /* transition creates visual glitches */
 }
+
+
+
+.rbc-event.my-event {
+  background-color: #0081C8; 
+}
+
+.rbc-event.other-user-event {
+  background-color: #00aac8c1;
+}
+
 
 .rbc-event:hover {
   /* background-color: #005FA3; */
@@ -332,12 +546,25 @@ Custom calendar event styling
   filter: brightness(1.10);
 }
 
+.dragging-active .rbc-event {
+  transition: none !important;
+}
+
+/* .dragging-active .rbc-time-content {
+  overflow-y: hidden;
+} */
+
 .rbc-selected {
-  background-color: #265a88 !important;
+  background-color: #264f88 !important;
 }
 
 .rbc-today {
   background-color: #f8f9fa;
+}
+
+.rbc-label {
+  font-size: .9rem;
+  font-weight: 400;
 }
 
 .rbc-header {
@@ -370,32 +597,33 @@ Custom calendar event styling
   border: 1px solid #005FA3;
 }
 
-/* .rbc-day-slot {
-  background-color: #f8f9fa;
+.rbc-day-slot {
+  /* background-color: #ffffff; */
   border-right: 1px solid #dee2e6;
-} */
+}
 
 .rbc-time-slot {
   align-content: center;
 }
-
 
 /* =========================
 LIST VIEW
 ============================ */
 
 .list-view {
-  /* margin-top: 20px; */
   background: white;
   padding: 20px;
   border-radius: 8px 0px 8px 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   overflow-x: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .list-view table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 16px;
 }
 
 .list-view th, .list-view td {
@@ -407,29 +635,180 @@ LIST VIEW
 .list-view th {
   background-color: #f8f9fa;
   font-weight: bold;
+  
 }
+
+.list-view td {
+  max-height: 200px;
+  /* overflow-y: auto; */
+}
+
+.desc {
+  display: block;
+  max-width: 300px;
+  overflow-wrap: break-word;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+/* .actions {
+  display: inline-block;
+  flex breaks it lol
+} */
 
 .actions button {
   margin-right: 5px;
-  padding: 5px 10px;
+  margin-top: 5px;
+  padding: 6px 12px;
   font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.actions button:first-child {
+  background-color: #A78700;
+  color: white;
+}
+
+.actions button:first-child:hover {
+  background-color: #886e00;
+}
+
+.actions button:nth-child(2):hover {
+  background-color: #dadee2;
 }
 
 .download-btn {
-  margin-top: 15px;
   background-color: #A78700;
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .download-btn:hover {
   background-color: #886e00;
+  transform: scale(1.02);
 }
 
+@media (max-width: 1024px) {
+  .list-view {
+    padding: 16px;
+  }
+  .list-view table {
+    font-size: 14px
+  }
+}
 
+@media (max-width: 800px) {
+  .list-view {
+    padding: 14px;
+  }
+
+  .list-view table {
+    font-size: 12px;
+  }
+
+  .refresh {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .download-btn {
+    font-size: 12px;
+  }
+
+  .new-booking-btn {
+    font-size: 12px;
+  }
+}
+
+/* Container for the list controls, making them display in a row with spacing */
+.list-controls {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap if the screen is too narrow */
+    gap: 20px; /* Provides space between each control group */
+    margin: 15px 0;
+    align-items: center; /* Vertically aligns items */
+}
+
+/* Styling for each individual control group */
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the label and the input */
+}
+
+/* Styling for the checkbox label */
+.control-group label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.control-group .ticks {
+  cursor: pointer;
+}
+
+.ticks label:hover {
+    background-color: #f0f0f0;
+}
+
+/* Style the checkbox input itself to look like a radio button */
+.control-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #555;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    outline: none;
+}
+
+/* Create the inner dot for the selected checkbox */
+.control-group input[type="checkbox"]:checked::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: #555;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Style the label text when the checkbox is checked */
+.control-group input[type="checkbox"]:checked + span {
+    font-weight: bold;
+}
+
+/* General styling for the text input field */
+.control-group input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+@media (max-width: 800px) {
+  .list-controls {
+    gap: 8px;
+    margin: 10px 0;
+  }
+
+  .control-group label, .control-group input[type="text"] {
+    font-size: 0.8rem;
+  }
+}
 
 /* Remove cancel button from initial pin modal */
 .pin-modal.initial .modal-buttons button:last-child {

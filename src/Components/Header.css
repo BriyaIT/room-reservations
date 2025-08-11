@@ -1,10 +1,10 @@
 .main-header {
-  padding: 2rem 1rem 1rem;
+  padding: 1.5rem 1rem 1rem;
   text-align: center;
 }
 
 .main-header .logo {
-  max-width: 100px;
+  max-width: 60px;
   margin-bottom: 0rem;
   animation: logoZoom 4s ease-in-out infinite;
   transform-origin: center;
@@ -23,7 +23,7 @@
 }
 
 .main-header h1 {
-  font-size: 2.8rem;
+  font-size: 2.6rem;
   color: white;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
   font-weight: 700;
@@ -37,7 +37,7 @@
   display: inline-block;
   padding: 0.3rem 1rem;
   border-radius: 8px;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: white;
   font-weight: 500;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
@@ -64,6 +64,26 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .main-header h1 {
+    font-size: 2rem;
+  }
+
+  .main-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .main-header .logo {
+    max-width: 50px;
+  }
+}
+
+@media (max-height: 600px) {
+  .main-header h1 {
+    font-size: 2rem;
+  }
+}
+
 @media (max-width: 600px) {
   /* 📦 Less padding on mobile (doesn't do anything?) */
   .main-header {
@@ -78,7 +98,7 @@
 
   /* 🏷️ Smaller room + site subtitle */
   .main-header h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding-top: 0.3rem;
   }
 }
