@@ -206,13 +206,14 @@ Calendar
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0px 24px rgba(0, 0, 0, 0.25);
   transition: .2s ease-in-out;
 }
 
 .refresh:hover {
   background-color: #005FA3;
   transform: scale(1.02);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
 }
 
 .refresh:disabled {

@@ -12,7 +12,7 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   /* border: 1px solid rgba(255, 255, 255, 1); */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0px 24px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
   z-index: 1000;
   cursor: pointer;
@@ -22,7 +22,7 @@
 .floating-back-button:hover {
   background: rgba(0, 95, 163, 0.9);
   transform: scale(1.08);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 1024px) {

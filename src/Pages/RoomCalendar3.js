@@ -264,8 +264,8 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
         title: '',
         description: '',
         bookedBy: '',
-        start: '',
-        end: ''
+        start: new Date(new Date().setHours(11, 0, 0, 0)),
+        end: new Date(new Date().setHours(13, 0, 0, 0))
       }
     );
     setIsRecurring(false);
@@ -273,40 +273,11 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     setShowModal(true);
   }
 
-  // Old changing datetime in booking modal
-  // const handleDateTimeChange = (field, value) => {
-  //   setNewEvent(prev => ({
-  //     ...prev,
-  //     [field]: new Date(value)
-  //   }));
-  // };
-
-  // For separate date and time
-  // const handleSplitDateTimeChange = (field, datePart, timePart) => {
-  //   setNewEvent(prev => {
-  //     let current = prev[field] ? new Date(prev[field]) : new Date();
-  
-  //     if (datePart) {
-  //       const [year, month, day] = datePart.split('-').map(Number);
-  //       current.setFullYear(year, month - 1, day);
-  //     }
-  
-  //     if (timePart) {
-  //       const [hour, minute] = timePart.split(':').map(Number);
-  //       current.setHours(hour, minute);
-  //     }
-  
-  //     return {
-  //       ...prev,
-  //       [field]: current
-  //     };
-  //   });
-  // };
-
   // Update datetime from date and time
   const handleSplitDateTimeChange = (field, datePart, timePart) => {
     setNewEvent(prev => {
       let current = prev[field] ? new Date(prev[field]) : new Date();
+      let end = prev.end ? new Date(prev.end) : null;
   
       if (datePart) {
         const [year, month, day] = datePart.split('-').map(Number);
@@ -320,32 +291,36 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
   
       const updatedEvent = { ...prev, [field]: current };
   
-      // If start time changes and it's after the end time → auto-adjust end
       if (field === 'start') {
-        const endDate = new Date(updatedEvent.end);
-        if (!updatedEvent.end || current >= endDate) {
-          updatedEvent.end = new Date(current.getTime() + 30 * 60000); // +30 mins
+        // Duration between start and end before start change
+        const prevDuration = end ? (end.getTime() - new Date(prev.start).getTime()) : 60 * 60000;
+  
+        if (!end || prev.end === prev.start) {
+          // If end not set or end same as start, set end to start + 60min
+          updatedEvent.end = new Date(current.getTime() + 60 * 60000);
+        } else {
+          // Check if end was changed separately
+          // If end unchanged, move end by same delta as start
+          // If end changed, only adjust if start moves after end
+  
+          const startMovedAfterEnd = current >= end;
+  
+          if (!prev.endChanged) {
+            // Move end preserving duration
+            updatedEvent.end = new Date(current.getTime() + prevDuration);
+          } else if (startMovedAfterEnd) {
+            // Push end forward to start + prevDuration
+            updatedEvent.end = new Date(current.getTime() + prevDuration);
+          }
         }
+      } else if (field === 'end') {
+        // Mark that end was changed manually
+        updatedEvent.endChanged = true;
       }
   
       return updatedEvent;
     });
   };
-
-  // 30 minute increment dropdown
-  // const generateTimeOptions = () => {
-  //   const options = [];
-  //   for (let h = 0; h < 24; h++) {
-  //     for (let m of [0, 30]) {
-  //       options.push(
-  //         <option key={`${h}:${m}`} value={moment({ hour: h, minute: m }).format('HH:mm')}>
-  //           {moment({ hour: h, minute: m }).format('h:mm A')}
-  //         </option>
-  //       );
-  //     }
-  //   }
-  //   return options;
-  // };
 
   const generateTimeOptions = (minMoment = null) => {
     const options = [];
