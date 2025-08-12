@@ -241,7 +241,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
 
   // Handle slot selection (when user clicks on empty time)
   const handleSelectSlot = (slotInfo) => {
-    console.log(isTouchOnlyDevice)
+    // console.log(isTouchOnlyDevice)
     // setSelectedSlot(slotInfo);
     // console.log(isDragging)
     setNewEvent(
@@ -268,6 +268,8 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
         end: ''
       }
     );
+    setIsRecurring(false);
+    setRecurringDays([]);
     setShowModal(true);
   }
 
@@ -301,6 +303,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
   //   });
   // };
 
+  // Update datetime from date and time
   const handleSplitDateTimeChange = (field, datePart, timePart) => {
     setNewEvent(prev => {
       let current = prev[field] ? new Date(prev[field]) : new Date();
@@ -401,11 +404,11 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     setSelectedEvent(event);
     setShowEventModal(true);
     setIsDragging(false)
-    setIsRecurring(event.recurringId !== null);
+    // setIsRecurring(event.recurringId !== null); // unnecessary now
     setRecurringDays([]);
   };
 
-  // Opens editing modal (modified booking modal) for existing event
+  // Opens editing modal (modified booking modal) for existing event (when user clicks edit)
   const handleEditEvent = (event) => {
     setNewEvent({
       title: event.rawTitle,
@@ -420,7 +423,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     setShowModal(true); // show editing modal
   };
 
-  // Delete event (single and recurring)
+  // Delete event (single and recurring, when user clicks delete)
   const handleDeleteEvent = async (event, deletionType) => {
     // If a deletionType is provided, it's a recurring event action.
     if (deletionType) {
@@ -525,7 +528,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
 
   const handleEventResize = handleEventDrop;
 
-  // Event styling
+  // Event styling for user owned/not owned
   const eventPropGetter = (event) => {
     const isMyBooking = isMyEvent(event._id);
     return {
@@ -571,7 +574,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
   
   // =========================================================
 
-  // Fetch and show pin modal
+  // Fetch and show pin modal on mount
   useEffect(() => {
     // Check if role is already in sesison storage
     const storedRole = sessionStorage.getItem('pinRole');
@@ -695,7 +698,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h3>{editingEvent ? 'Edit Booking' : 'Book Room'} {roomNumber}</h3>
+            <h3>{editingEvent ? 'Edit Booking for' : 'Book'} {roomNumber}</h3>
             {/* Title */}
             <div className="form-group">
               <label>Event Title *</label>
