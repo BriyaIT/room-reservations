@@ -39,7 +39,7 @@ const Rooms = ({ userRole, setShowPinModal }) => {
       )}
 
       <Header 
-        title="BRIYA Room Reservations"
+        title="Briya Room Reservations"
         subtitle={`${campus?.name || 'Campus'} - Choose a Room to Book`}
         showImmediately={true}
       />

@@ -274,6 +274,7 @@ Modal Styles
   margin-bottom: 4px;
   font-weight: bold;
   color: #555;
+  font-size: 14px;
 }
 
 .form-group input,
@@ -344,6 +345,18 @@ input[type="date"] {
 /* ============================
 Recurring Events Specific Styles
 ==============================*/
+
+.recur-box {
+  padding: 12px 16px 0;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+#not-label {
+  background-color: #f8f8f8 !important;
+}
+
 /* Day picker buttons */
 .day-picker {
     display: flex;
@@ -379,7 +392,6 @@ Recurring Events Specific Styles
     background-color: #005FA3;
 }
 
-/* Error message style */
 .error {
     color: #d9534f;
     font-weight: bold;
@@ -396,12 +408,14 @@ Recurring Events Specific Styles
   align-items: center;
   font-weight: bold;
   color: #555;
+  font-size: 14px;
 }
 
+/* recurring event */
 .recur-group .is-recur {
   cursor: pointer;
   font-weight: 500 !important;
-  margin: -10px 0;
+  margin: -10px 0 -16px;
   font-size: 14px;
   padding: 8px;
   border-radius: 8px;
@@ -436,6 +450,72 @@ Recurring Events Specific Styles
 .recur-group label:hover {
   background-color: #f0f0f0;
   border-color: #999;
+}
+
+
+/* Recurrence type radio group ====================== */
+.recur-type-group {
+  margin-bottom: 8px;
+}
+
+.recur-type-group label {
+  font-weight: bold;
+  color: #555;
+}
+
+.recur-type-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.recur-type-label {
+  display: flex;
+  align-items: center;
+  margin: 6px 2px -10px 0;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: 6px;
+  /* background-color: #f9f9f9; */
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.recur-type-label:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.recur-type-options input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #555;
+  border-radius: 50%;
+  margin: 0 8px 0 0;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+}
+
+.recur-type-options input[type="radio"]:checked::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #555;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.recur-type-options label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
 }
 
 /* end recurring styles */

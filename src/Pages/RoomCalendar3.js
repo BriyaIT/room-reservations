@@ -79,6 +79,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
   // Recurring delete modal
   const [showRecurringDeleteModal, setShowRecurringDeleteModal] = useState(false);
   const [selectedDeletionType, setSelectedDeletionType] = useState('this'); // New state for radio selection
+  const [recurrenceType, setRecurrenceType] = useState('daily'); // default daily
 
   // List view filters
   const [showAllEvents, setShowAllEvents] = useState(false);
@@ -138,6 +139,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
       return;
     }
 
+    // Bad time handling
     const startMoment = moment(newEvent.start);
     const endTime = moment(newEvent.end);
 
@@ -146,16 +148,19 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
       return
     }
 
+    const bookingsToAdd = [];
+    
+    // Error handling and booking
     if (isRecurring) {
-      if (recurringDays.length === 0) {
-        setError('Please select at least one day for recurring events');
+      if (recurrenceType === 'weekly' && recurringDays.length === 0) {
+        setError('Please select at least one day for recurring weekly events');
         return;
       }
       if (!recurringEndDate) {
         setError('Please select an end date');
         return
       }
-
+      
       const endMoment = moment(recurringEndDate);
 
       // Validate that recurringEndDate is not before event start date
@@ -170,18 +175,33 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
         setError('End date cannot be more than 1 year from the start date');
         return;
       }
-    }
 
-    const bookingsToAdd = [];
-    const recurringId = isRecurring ? Date.now().toString() : null;
-
-    if (isRecurring) {
+      // Recurring bookings
+      const recurringId = isRecurring ? Date.now().toString() : null;
       let currentDate = moment(newEvent.start);
-      const endMoment = moment(recurringEndDate);
       const duration = moment.duration(moment(newEvent.end).diff(moment(newEvent.start)));
 
       while (currentDate.isSameOrBefore(endMoment, 'day')) {
-        if (recurringDays.includes(currentDate.day())) { // `day()` returns 0 for Sunday, 1 for Monday, etc.
+        let shouldAdd = false;
+
+        switch (recurrenceType) {
+          case 'daily':
+            shouldAdd = true;
+            break;
+          case 'weekly':
+            shouldAdd = recurringDays.includes(currentDate.day());
+            break;
+          case 'bi-weekly':
+            shouldAdd = true;
+            break;
+          case 'monthly':
+            shouldAdd = true;
+            break;
+          default:
+            return;
+        }
+
+        if (shouldAdd) { // `day()` returns 0 for Sunday, 1 for Monday, etc.
           bookingsToAdd.push({
             _id: Date.now().toString() + Math.random(), // Unique ID for each event
             building,
@@ -197,8 +217,25 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
           });
           currentDate = moment(currentDate).subtract(duration); // Subtract duration to not compound time
         }
-        currentDate = currentDate.add(1, 'day');
-      }
+
+        // Increment date based on recurrence type
+        switch (recurrenceType) {
+          case 'daily':
+            currentDate.add(1, 'day');
+            break;
+          case 'weekly':
+            currentDate.add(1, 'day');
+            break;
+          case 'bi-weekly':
+            currentDate.add(2, 'weeks');
+            break;
+          case 'monthly':
+            currentDate.add(1, 'month');
+            break;
+          default:
+            return;
+        }
+      } // end while
     } else {
       // Single booking
       bookingsToAdd.push({
@@ -255,22 +292,35 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     }); // Set default start/end to selected slot
     setIsRecurring(false);
     setRecurringDays([moment(slotInfo.start).day()]);
+    setRecurrenceType('daily');
     setShowModal(true);
   };
 
   // New booking button click
   const handleNewBooking = () => {
+    const now = new Date();
+
+    // Round to nearest 30 minutes
+    const minutes = now.getMinutes();
+    const roundedMinutes = minutes < 15 ? 0 : minutes < 45 ? 30 : 0;
+    if (minutes >= 45) now.setHours(now.getHours() + 1);
+    now.setMinutes(roundedMinutes, 0, 0);
+
+    const start = new Date(now);
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+
     setNewEvent(
       {
         title: '',
         description: '',
         bookedBy: '',
-        start: new Date(new Date().setHours(11, 0, 0, 0)),
-        end: new Date(new Date().setHours(13, 0, 0, 0))
+        start: start, // sets to nearest 30 min by default
+        end: end
       }
     );
     setIsRecurring(false);
     setRecurringDays([]);
+    setRecurrenceType('daily');
     setShowModal(true);
   }
 
@@ -367,6 +417,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     setSelectedEvent(event);
     setShowEventModal(true);
     setIsDragging(false)
+    setError('')
     // setIsRecurring(event.recurringId !== null); // unnecessary now
     setRecurringDays([]);
   };
@@ -737,43 +788,72 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
             )}
             {/* Recurring options */}
             {isRecurring && (
-              <>
-                <div className="recur-group">
-                  <label>Repeats On *</label>
-                  {/* Day picking buttons */}
-                  <div className="day-picker">
-                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                      <button
-                        key={index}
-                        className={`day-btn ${recurringDays.includes(index) ? 'selected' : ''}`}
-                        onClick={() => {
-                          setRecurringDays(prevDays => 
-                            prevDays.includes(index)
-                              ? prevDays.filter(d => d !== index)
-                              : [...prevDays, index]
-                          );
-                        }}
-                      >
-                        {day}
-                      </button>
+              <div className='recur-box'>
+                {/* Recurrence type */}
+                <div className="recur-type-group">
+                  <label>Repeat Type *</label>
+                  <div className="recur-type-options">
+                    {['Daily', 'Weekly', 'Bi-Weekly', 'Monthly'].map((type, index) => (
+                      <label key={index} className="recur-type-label">
+                        <input
+                          type="radio"
+                          name="recurrenceType"
+                          value={type.toLowerCase()}
+                          checked={recurrenceType === type.toLowerCase()}
+                          onChange={(e) => {
+                            setRecurrenceType(e.target.value);
+                            // Reset recurringDays when switching away from weekly
+                            if (e.target.value !== 'weekly') {
+                              // setRecurringDays([]);
+                            }
+                          }}
+                        />
+                        {type}
+                      </label>
                     ))}
                   </div>
                 </div>
+
+                {/* Only show when weekly is selected */}
+                {recurrenceType === 'weekly' && (
+                  <div className="recur-group">
+                    <label id="not-label">Repeats On *</label>
+                    {/* Day picking buttons */}
+                    <div className="day-picker">
+                      {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                        <button
+                          key={index}
+                          className={`day-btn ${recurringDays.includes(index) ? 'selected' : ''}`}
+                          onClick={() => {
+                            setRecurringDays(prevDays => 
+                              prevDays.includes(index)
+                                ? prevDays.filter(d => d !== index)
+                                : [...prevDays, index]
+                            );
+                          }}
+                        >
+                          {day}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Recurring event end date */}
                 <div className="time-group">
-                <div className="form-group">
-                  <label>Ends On *</label>
-                  <input
-                    type="date"
-                    value={recurringEndDate ? moment(recurringEndDate).format('YYYY-MM-DD') : ''}
-                    onChange={(e) => {
-                      const newDate = moment(e.target.value).toDate();;
-                      setRecurringEndDate(newDate);
-                    }}
-                  />
+                  <div className="form-group">
+                    <label>Ends On *</label>
+                    <input
+                      type="date"
+                      value={recurringEndDate ? moment(recurringEndDate).format('YYYY-MM-DD') : ''}
+                      onChange={(e) => {
+                        const newDate = moment(e.target.value).toDate();;
+                        setRecurringEndDate(newDate);
+                      }}
+                    />
+                  </div>
                 </div>
-                </div>
-              </>
+              </div>
             )}
             
             {/* Booked By */}

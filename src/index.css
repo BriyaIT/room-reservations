@@ -17,14 +17,15 @@ code {
 body {
   color: #222;
   min-height: 100vh;
-  background: linear-gradient(270deg, #0077c2, #55c3f1, #f6b60c);
-  background-size: 600% 600%;
-  animation: gradientShift 20s ease infinite;
+  background-color: #0081C8;
+  /* background: linear-gradient(270deg, #0077c2, #55c3f1, #f6b60c); */
+  /* background-size: 600% 600%; */
+  /* animation: gradientShift 20s ease infinite; */
   margin: 0;
   padding: 0;
 }
 
-@keyframes gradientShift {
+/* @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
   }
@@ -34,7 +35,7 @@ body {
   100% {
     background-position: 0% 50%;
   }
-}
+} */
 
 .center {
   text-align: center;

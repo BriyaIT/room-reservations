@@ -51,7 +51,7 @@ const Sites = ({ userRole, setShowPinModal }) => {
       logoVisible={animations.logo}
       h1Visible={animations.h1}
       h2Visible={animations.h2}
-      title="BRIYA Room Reservations"
+      title="Briya Room Reservations"
       subtitle="Choose a Site"
     />
 
