@@ -13,6 +13,7 @@ import './RoomCalendar.css';
 
 import BackButton from '../Components/BackButton';
 import campuses from '../Data/campuses';
+import rooms from '../Data/rooms';
 import LoginButton from '../Components/LoginButton.js';
 import PinModal from '../Components/PinModal.js';
 
@@ -322,6 +323,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     });
   };
 
+  // Generate times in 30 min increments for dropdown
   const generateTimeOptions = (minMoment = null) => {
     const options = [];
     const minMinutes = minMoment
@@ -346,31 +348,17 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
     return options;
   };
 
-  // Test booking display
-  // const testBooking = () => {
-  //   const bookings = [{
-  //     id: 12345,
-  //     title: 'test title (test)',
-  //     start: new Date(2025, 6, 30, 10, 0), // 10 AM on July 24, 2025
-  //     end: new Date(2025, 6, 30, 11, 0), // 11 AM on July 24, 2025
-  //     description: 'this is a test booking description',
-  //     bookedBy: 'admin'
-  //   },
-  //   {
-  //     id: 12346,
-  //     title: 'test title 2 (test2)',
-  //     start: new Date(2025, 6, 31, 8, 0), // 8 AM on July 23, 2025
-  //     end: new Date(2025, 6, 31, 13, 0), // 1 PM on July 23, 2025
-  //     description: 'this is a test booking description',
-  //     bookedBy: 'admin'
-  //   }];
-  //   setEvents(bookings);
-  // }
-
   // Campus name from ID for display
   const getCampusName = () => {
     const campus = campuses.find(c => c.id === building);
     return campus ? campus.name : building; // Fallback to ID if not found
+  };
+
+  // Room displayName from name for display
+  const getRoomName = () => {
+    const roomArray = rooms[building] || []; // rooms for that campus
+    const room = roomArray.find(c => c.name === roomNumber);
+    return room ? room.displayName : roomNumber;
   };
 
   // Handle event selection (when user clicks on existing booking)
@@ -578,7 +566,7 @@ const RoomCalendar = ({ building, roomNumber, userRole, setShowPinModal, setUser
       </div>
 
       <div className="calendar-header">
-        <h2>{getCampusName()}  ▶  {roomNumber}</h2>
+        <h2>{getCampusName()}  ▶  {getRoomName()}</h2>
         
       </div>
       {/* Tabs */}

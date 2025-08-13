@@ -68,7 +68,7 @@ const Rooms = ({ userRole, setShowPinModal }) => {
                 onKeyDown={(e) => e.key === 'Enter' && navigateToCalendar(campusId, room.name)}
               >
                 <img src={room.image} alt={room.name} />
-                <div className="caption">{room.name}</div>
+                <div className="caption">{room.displayName}</div>
               </div>
             ))
           )}

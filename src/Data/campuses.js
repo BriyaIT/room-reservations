@@ -4,6 +4,7 @@ import Main_GA_Annex from '../Assets/Sites/Main_GA_Annex.png';
 import Main_Site_SH from '../Assets/Sites/Main_Site_SH.png';
 import Main_Site_ON from '../Assets/Sites/Main_Site_ON.png';
 
+// only change name, don't change id
 const campuses = [
   { id: 'fortTotten', name: 'Fort Totten', image: fort_totten},
   { id: 'shepherd', name: 'Shepherd', image: Main_Site_SH},

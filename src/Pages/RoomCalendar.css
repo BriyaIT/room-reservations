@@ -236,6 +236,7 @@ Modal Styles
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
   z-index: 1000;
 }
 
