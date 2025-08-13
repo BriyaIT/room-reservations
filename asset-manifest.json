@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.d5601b2f.css",
-    "main.js": "/static/js/main.f69d75b0.js",
+    "main.js": "/static/js/main.1b6f24c6.js",
     "static/js/453.b1b37ee7.chunk.js": "/static/js/453.b1b37ee7.chunk.js",
     "static/media/Main_Site_ON.png": "/static/media/Main_Site_ON.a0d051100e76208c122b.png",
     "static/media/Main_Site_SH.png": "/static/media/Main_Site_SH.241ec753c68a76c16d46.png",
@@ -48,11 +48,11 @@
     "static/media/briya_logo.png": "/static/media/briya_logo.e189dff1af8123e0c0e8.png",
     "index.html": "/index.html",
     "main.d5601b2f.css.map": "/static/css/main.d5601b2f.css.map",
-    "main.f69d75b0.js.map": "/static/js/main.f69d75b0.js.map",
+    "main.1b6f24c6.js.map": "/static/js/main.1b6f24c6.js.map",
     "453.b1b37ee7.chunk.js.map": "/static/js/453.b1b37ee7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d5601b2f.css",
-    "static/js/main.f69d75b0.js"
+    "static/js/main.1b6f24c6.js"
   ]
 }
